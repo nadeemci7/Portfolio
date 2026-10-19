@@ -1,13 +1,15 @@
 import { forwardRef, useEffect, useState, type CSSProperties, type MouseEvent } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import type { Project } from '../data'
 import { COLORS } from '../lib/blob'
 import Face from './Face'
 import { EASE, ScrollFade } from './Reveal'
+import type { Tab } from './ProjectModal'
 
 interface CardProps {
   project: Project
   flash: number
+  onOpen: (tab: Tab) => void
 }
 
 /* "98 Apex classes" becomes a big 98 over a small label. */
@@ -27,13 +29,14 @@ function Fact({ text }: { text: string }) {
 
 /*
   Three layers: the slot is the grid item (filter animations), the fade
-  follows the scroll, and the card itself pops on hover.
+  follows the scroll, and the card itself pops on hover. Clicking the card
+  opens the project window.
 */
-const ProjectCard = forwardRef<HTMLDivElement, CardProps>(function ProjectCard({ project: p, flash }, ref) {
-  const [open, setOpen] = useState(false)
+const ProjectCard = forwardRef<HTMLDivElement, CardProps>(function ProjectCard({ project: p, flash, onOpen }, ref) {
   const [flashing, setFlashing] = useState(false)
   const reduce = useReducedMotion()
   const face = p.face ?? { color: 'blue', shape: 'round', eyes: 'dots' }
+  const cover = p.images?.[0]
 
   useEffect(() => {
     if (!flash) return
@@ -42,9 +45,9 @@ const ProjectCard = forwardRef<HTMLDivElement, CardProps>(function ProjectCard({
     return () => window.clearTimeout(id)
   }, [flash])
 
-  const toggleFromCard = (e: MouseEvent) => {
+  const openFromCard = (e: MouseEvent) => {
     if ((e.target as HTMLElement).closest('a, button')) return
-    setOpen((o) => !o)
+    onOpen('overview')
   }
 
   return (
@@ -59,21 +62,24 @@ const ProjectCard = forwardRef<HTMLDivElement, CardProps>(function ProjectCard({
     >
       <ScrollFade className="slot-fade">
         <article
-          className={'card' + (p.image ? ' has-shot' : '') + (flashing ? ' flash' : '') + (open ? ' open' : '')}
+          className={'card' + (cover ? ' has-shot' : '') + (flashing ? ' flash' : '')}
           style={{ '--tint': COLORS[face.color] } as CSSProperties}
-          onClick={toggleFromCard}
-          onPointerMove={(e) => {
-            if (e.pointerType !== 'mouse') return
-            const el = e.currentTarget
-            const r = el.getBoundingClientRect()
-            el.style.setProperty('--mx', `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`)
-            el.style.setProperty('--my', `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`)
-          }}
+          onClick={openFromCard}
         >
           <div className="stage">
-            {p.image ? (
+            {cover ? (
               <>
-                <img className="shot" src={p.image.src} alt={p.image.alt} loading="lazy" />
+                <button
+                  type="button"
+                  className="shot-btn"
+                  onClick={() => onOpen('screens')}
+                  aria-label={`See screenshots of ${p.name}`}
+                >
+                  <img className="shot" src={cover.src} alt={cover.alt} loading="lazy" />
+                  <span className="shot-hint" aria-hidden="true">
+                    View screens
+                  </span>
+                </button>
                 <div className="stage-face corner">
                   <Face spec={face} />
                 </div>
@@ -127,34 +133,9 @@ const ProjectCard = forwardRef<HTMLDivElement, CardProps>(function ProjectCard({
             )}
 
             <div className="more">
-              <button type="button" className="more-btn" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
-                {open ? 'Close' : 'What I built'} <span className="plus" aria-hidden="true" />
+              <button type="button" className="more-btn" onClick={() => onOpen('built')} aria-haspopup="dialog">
+                Open details <span className="plus" aria-hidden="true" />
               </button>
-              <AnimatePresence initial={false}>
-                {open && (
-                  <motion.div
-                    key="more"
-                    className="more-body"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: EASE }}
-                  >
-                    <ul>
-                      {p.built.map((b, i) => (
-                        <motion.li
-                          key={b}
-                          initial={reduce ? false : { opacity: 0, x: -14 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.06 + i * 0.05, duration: 0.4, ease: EASE }}
-                        >
-                          {b}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           </div>
         </article>

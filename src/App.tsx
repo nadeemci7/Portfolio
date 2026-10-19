@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useReducedMotion } from 'motion/react'
 import { PROJECTS, TOOLS } from './data'
+import { scrollToId, startSmoothScroll } from './lib/scroll'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Work from './components/Work'
@@ -21,11 +22,15 @@ export default function App() {
   const show = useCallback(
     (key: string) => {
       setActive(key)
-      document.getElementById('work')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
-      window.setTimeout(() => setFlash((f) => f + 1), reduce ? 0 : 750)
+      scrollToId('work')
+      window.setTimeout(() => setFlash((f) => f + 1), reduce ? 0 : 900)
     },
     [reduce],
   )
+
+  useEffect(() => {
+    startSmoothScroll()
+  }, [])
 
   return (
     <>

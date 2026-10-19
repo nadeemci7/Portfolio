@@ -408,7 +408,7 @@ export default function BlobScene({ active, counts, onPick, onShow, onClear }: B
     <div ref={wrap} className="scene">
       <Canvas
         flat
-        dpr={[1, 1.75]}
+        dpr={[1, 1.5]}
         frameloop={visible ? 'always' : 'never'}
         camera={{ position: [0, 0, 14], fov: 30, near: 1, far: 40 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}

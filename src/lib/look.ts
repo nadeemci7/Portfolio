@@ -1,46 +1,39 @@
 import { prefersReducedMotion } from './blob'
 
 /*
-  Every SVG face on the page registers here. One pointer listener moves all
-  their eyes toward the cursor, and a timer makes a random visible face blink.
+  Every SVG face on the page registers here. One pointer listener moves the
+  eyes of the faces on screen toward the cursor, and a timer makes one blink.
+  Faces on screen are tracked with an IntersectionObserver, and each update
+  reads all positions first and writes all styles after, so the browser
+  never has to recalculate layout in between.
 */
 const faces = new Set<SVGSVGElement>()
+const visible = new Set<SVGSVGElement>()
 let px = 0
 let py = 0
-let seen = false
 let queued = false
 let started = false
-
-function inView(r: DOMRect) {
-  return r.bottom > -40 && r.top < window.innerHeight + 40 && r.width > 0
-}
+let io: IntersectionObserver | null = null
 
 function update() {
   queued = false
-  if (!seen) return
-  faces.forEach((f) => {
-    const r = f.getBoundingClientRect()
-    if (!inView(r)) return
+  const list = [...visible]
+  const rects = list.map((f) => f.getBoundingClientRect())
+  for (let i = 0; i < list.length; i++) {
+    const r = rects[i]
     const dx = px - (r.left + r.width / 2)
     const dy = py - (r.top + r.height / 2)
     const d = Math.hypot(dx, dy) || 1
     const k = Math.min(d / 260, 1)
-    f.style.setProperty('--ex', ((dx / d) * k * 5).toFixed(2) + 'px')
-    f.style.setProperty('--ey', ((dy / d) * k * 4).toFixed(2) + 'px')
-  })
-}
-
-function queue() {
-  if (queued) return
-  queued = true
-  requestAnimationFrame(update)
+    list[i].style.setProperty('--ex', ((dx / d) * k * 5).toFixed(1) + 'px')
+    list[i].style.setProperty('--ey', ((dy / d) * k * 4).toFixed(1) + 'px')
+  }
 }
 
 function blink() {
-  if (document.hidden) return
-  const visible = [...faces].filter((f) => inView(f.getBoundingClientRect()))
-  if (!visible.length) return
-  const f = visible[Math.floor(Math.random() * visible.length)]
+  if (document.hidden || !visible.size) return
+  const list = [...visible]
+  const f = list[Math.floor(Math.random() * list.length)]
   f.classList.add('blink')
   window.setTimeout(() => f.classList.remove('blink'), 140)
 }
@@ -48,23 +41,37 @@ function blink() {
 function start() {
   if (started || prefersReducedMotion()) return
   started = true
-  const move = (e: PointerEvent) => {
-    px = e.clientX
-    py = e.clientY
-    seen = true
-    queue()
-  }
-  window.addEventListener('pointermove', move, { passive: true })
-  window.addEventListener('pointerdown', move, { passive: true })
-  window.addEventListener('scroll', queue, { passive: true })
-  window.setInterval(blink, 750)
+  io = new IntersectionObserver((entries) =>
+    entries.forEach((en) => {
+      const f = en.target as SVGSVGElement
+      if (en.isIntersecting) visible.add(f)
+      else visible.delete(f)
+    }),
+  )
+  faces.forEach((f) => io!.observe(f))
+  window.addEventListener(
+    'pointermove',
+    (e) => {
+      if (e.pointerType !== 'mouse') return
+      px = e.clientX
+      py = e.clientY
+      if (!queued) {
+        queued = true
+        requestAnimationFrame(update)
+      }
+    },
+    { passive: true },
+  )
+  window.setInterval(blink, 800)
 }
 
 export function registerFace(el: SVGSVGElement) {
   start()
   faces.add(el)
-  queue()
+  io?.observe(el)
   return () => {
     faces.delete(el)
+    visible.delete(el)
+    io?.unobserve(el)
   }
 }

@@ -39,7 +39,8 @@ export interface Project {
   stack: string[]
   uses: string[]
   links?: { label: string; href: string }[]
-  image?: { src: string; alt: string }
+  /** screenshots; the first one shows on the card, all of them in the Screens tab */
+  images?: { src: string; alt: string; caption: string }[]
   built: string[]
 }
 
@@ -90,7 +91,18 @@ export const PROJECTS: Project[] = [
       { label: 'Patient portal', href: HF + '/patients/' },
       { label: 'Doctor portal', href: HF + '/doctors/' },
     ],
-    image: { src: BASE + 'work/healthfirst.jpg', alt: 'The HealthFirst Clinics public website: an inquiry form beside the headline "Trusted care in 12 cities. One place to ask."' },
+    images: [
+      {
+        src: BASE + 'work/healthfirst.jpg',
+        alt: 'The HealthFirst Clinics public website: an inquiry form beside the headline "Trusted care in 12 cities. One place to ask."',
+        caption: 'The public website. Patients send one inquiry; it becomes a Case with an SLA and a named team.',
+      },
+      {
+        src: BASE + 'work/healthfirst-full.jpg',
+        alt: 'The full HealthFirst public page: inquiry form, what happens after you send it, and specialists in 10 departments.',
+        caption: 'The whole public page, from the inquiry form down to the ten departments. Scroll inside the picture.',
+      },
+    ],
     built: [
       '98 Apex classes (33,000+ lines), 17 triggers, 51 LWCs, 9 custom objects and 6 custom metadata types, covered by 642 Apex test methods.',
       'Three Experience Cloud sites: a public website with an inquiry form, a patient portal (appointments, bills, records, care plans) and a doctor portal (diary, patients, admissions).',
@@ -113,7 +125,18 @@ export const PROJECTS: Project[] = [
     facts: ['5 Apex agent actions', '4 systems synced', 'mappings in Custom Metadata'],
     stack: ['Apex', 'LWC', 'Agentforce', 'Agent Script', 'Slack API', 'HubSpot API', 'Meta Marketing API', 'TallyPrime'],
     uses: ['apex', 'lwc', 'agentforce', 'sql'],
-    image: { src: BASE + 'work/sales-assistant-slack.jpg', alt: 'The Sales Assistant in Slack answering "which of my deals close in the next 30 days?" and updating an opportunity after a confirm step.' },
+    images: [
+      {
+        src: BASE + 'work/sales-assistant-slack.jpg',
+        alt: 'The Sales Assistant in Slack answering "which of my deals close in the next 30 days?" and updating an opportunity after a confirm step.',
+        caption: 'In Slack: a rep asks about deals closing this month, then moves one to Needs Analysis after a confirm step.',
+      },
+      {
+        src: BASE + 'work/sales-assistant-salesforce.jpg',
+        alt: 'The same Agentforce agent in the Salesforce side panel, next to the opportunity record it is talking about.',
+        caption: 'The same agent inside Salesforce, in the side panel next to the deal it is working on.',
+      },
+    ],
     built: [
       'An Agentforce employee agent that lets reps search, read, create and update records and review their pipeline from Slack, through five Apex actions that confirm before any write.',
       'A sync engine for Slack, HubSpot, TallyPrime, Meta Ads and Meta Lead Ads, with direction, schedule and conflict rule set per connection. Field and object mappings live in Custom Metadata, so a new mapping needs no code.',

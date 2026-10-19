@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import { motion } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
 import Face from './Face'
+import Pill from './Pill'
 
 const LINKS = [
   ['work', 'Work'],
@@ -13,6 +13,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [current, setCurrent] = useState('')
+  const navRef = useRef<HTMLUListElement>(null)
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 8)
@@ -70,11 +71,16 @@ export default function Header() {
             </span>
             Menu
           </button>
-          <ul className={'nav' + (open ? ' open' : '')} id="nav">
+          <ul className={'nav' + (open ? ' open' : '')} id="nav" ref={navRef}>
+            <Pill host={navRef} selector="a.here" watch={current + open} className="nav-pill" />
             {LINKS.map(([id, label]) => (
               <li key={id}>
-                <a href={`#${id}`} className={current === id ? 'here' : ''} onClick={() => setOpen(false)}>
-                  {current === id && <motion.span layoutId="nav-pill" className="nav-pill" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />}
+                <a
+                  href={`#${id}`}
+                  className={current === id ? 'here' : ''}
+                  aria-current={current === id ? 'location' : undefined}
+                  onClick={() => setOpen(false)}
+                >
                   <span>{label}</span>
                 </a>
               </li>

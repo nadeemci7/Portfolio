@@ -21,15 +21,11 @@ export function ScrollFade({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const reduce = useReducedMotion()
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const p = useSpring(scrollYProgress, { stiffness: 140, damping: 26, mass: 0.4 })
-  const opacity = useTransform(p, fadeOut ? [0, 0.22, 0.8, 1] : [0, 0.22], fadeOut ? [0, 1, 1, 0.1] : [0, 1])
-  const y = useTransform(p, [0, 0.28], [110, 0])
-  const scale = useTransform(p, fadeOut ? [0, 0.28, 0.82, 1] : [0, 0.28], fadeOut ? [0.86, 1, 1, 0.94] : [0.86, 1])
-  const filter = useTransform(p, (v) => {
-    const b = v < 0.22 ? (1 - v / 0.22) * 12 : v > 0.85 && fadeOut ? ((v - 0.85) / 0.15) * 6 : 0
-    return b < 0.1 ? 'none' : `blur(${b.toFixed(1)}px)`
-  })
+  const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  // only opacity and transform change, so the browser can animate on the GPU without repainting
+  const opacity = useTransform(p, fadeOut ? [0, 0.24, 0.8, 1] : [0, 0.24], fadeOut ? [0, 1, 1, 0.1] : [0, 1])
+  const y = useTransform(p, [0, 0.3], [90, 0])
+  const scale = useTransform(p, fadeOut ? [0, 0.3, 0.82, 1] : [0, 0.3], fadeOut ? [0.9, 1, 1, 0.95] : [0.9, 1])
   if (reduce) {
     return (
       <div ref={ref} className={className} style={style}>
@@ -38,7 +34,7 @@ export function ScrollFade({
     )
   }
   return (
-    <motion.div ref={ref} className={className} style={{ ...style, opacity, y, scale, filter }}>
+    <motion.div ref={ref} className={className} style={{ ...style, opacity, y, scale, willChange: 'transform, opacity' }}>
       {children}
     </motion.div>
   )
@@ -50,8 +46,8 @@ export default function Reveal({ children, className, delay = 0 }: { children: R
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 40, filter: 'blur(12px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, margin: '0px 0px -12% 0px' }}
       transition={{ duration: 0.9, delay, ease: EASE }}
     >

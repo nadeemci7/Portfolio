@@ -18,6 +18,12 @@ npm run dev      # http://127.0.0.1:5173
 All text, projects, timeline and skills live in `src/data.ts`. To add a project, copy one
 block in `PROJECTS` and edit it. The CV files are in `public/cv/` (the `.tex` source opens in Overleaf).
 
+## Link to one project
+
+Add `?project=<id>` (and optionally `&tab=overview|built|stack|screens`) to open a project's window
+straight away, for example https://nadeemci7.github.io/Portfolio/?project=healthfirst&tab=screens.
+Project ids are in `src/data.ts`.
+
 ## Colour themes
 
 Try a theme with `?theme=` in the address, for example `http://127.0.0.1:5173/?theme=lime`.
