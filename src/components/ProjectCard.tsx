@@ -1,7 +1,7 @@
-import { forwardRef, useEffect, useState, type CSSProperties, type MouseEvent } from 'react'
+import { forwardRef, useEffect, useState, type MouseEvent } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import type { Project } from '../data'
-import { COLORS } from '../lib/blob'
+import { tintVars } from '../lib/blob'
 import Face from './Face'
 import { EASE, ScrollFade } from './Reveal'
 import type { Tab } from './ProjectModal'
@@ -63,7 +63,7 @@ const ProjectCard = forwardRef<HTMLDivElement, CardProps>(function ProjectCard({
       <ScrollFade className="slot-fade">
         <article
           className={'card' + (cover ? ' has-shot' : '') + (flashing ? ' flash' : '')}
-          style={{ '--tint': COLORS[face.color] } as CSSProperties}
+          style={tintVars(face.color)}
           onClick={openFromCard}
         >
           <div className="stage">

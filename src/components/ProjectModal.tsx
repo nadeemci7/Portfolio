@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { TOOLS, type Project } from '../data'
-import { COLORS } from '../lib/blob'
+import { tintVars } from '../lib/blob'
 import { lockScroll } from '../lib/scroll'
 import Face from './Face'
 import Pill from './Pill'
@@ -111,7 +111,7 @@ function Dialog({ project: p, tab: asked, setTab, onClose, onPrev, onNext, index
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        style={{ '--tint': COLORS[face.color] } as CSSProperties}
+        style={tintVars(face.color)}
         initial={reduce ? { opacity: 0 } : { opacity: 0, y: 60, scale: 0.94 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={reduce ? { opacity: 0 } : { opacity: 0, y: 40, scale: 0.96 }}
@@ -206,7 +206,7 @@ function Dialog({ project: p, tab: asked, setTab, onClose, onPrev, onNext, index
                       <h3 className="m-h">See other projects that use</h3>
                       <div className="m-tools">
                         {tools.map((t) => (
-                          <button key={t.key} type="button" className="m-tool" onClick={() => onTool(t.key)} style={{ '--c': COLORS[t.color] } as CSSProperties}>
+                          <button key={t.key} type="button" className="m-tool" onClick={() => onTool(t.key)} style={tintVars(t.color)}>
                             <span className="m-tool-face">
                               <Face spec={t} />
                             </span>

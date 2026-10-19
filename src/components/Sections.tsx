@@ -1,6 +1,6 @@
-import { useState, type CSSProperties } from 'react'
+import { useState } from 'react'
 import { PATH, PROFILE, PROJECTS, TOOLBOX, type Eyes, type Shape } from '../data'
-import { COLORS } from '../lib/blob'
+import { tintVars } from '../lib/blob'
 import Face from './Face'
 import Reveal, { Magnetic, ScrollFade, Title } from './Reveal'
 
@@ -14,7 +14,7 @@ export function Path() {
         </ScrollFade>
         <ol className="path">
           {PATH.map((item) => (
-            <li key={item.title} style={{ '--tint': COLORS[item.color] } as CSSProperties}>
+            <li key={item.title} style={tintVars(item.color)}>
               <ScrollFade className="path-row">
                 <span className="dot" aria-hidden="true" />
                 <span className="yrs">{item.years}</span>
@@ -96,7 +96,7 @@ export function Toolbox() {
         <div className="toolbox">
           {TOOLBOX.map((g, i) => (
             <ScrollFade key={g.title} className="tool-fade">
-              <div className="tool-group" style={{ '--tint': COLORS[g.color] } as CSSProperties}>
+              <div className="tool-group" style={tintVars(g.color)}>
                 <header>
                   <span className="mini">
                     <Face spec={{ color: g.color, ...GROUP_LOOKS[i % GROUP_LOOKS.length] }} />

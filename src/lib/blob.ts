@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import type { ColorName, Eyes, Shape } from '../data'
 
 export const COLORS: Record<ColorName, string> = {
@@ -9,6 +10,17 @@ export const COLORS: Record<ColorName, string> = {
   ink: '#1b1e27',
   cloud: '#c9ccd5',
   orange: '#ff8a3d',
+}
+
+/*
+  The colour used for borders, fills and glows around a character. Ink is the
+  character's own colour but would vanish on a dark page, so its highlights use
+  a light steel instead. --on-tint is the text colour that reads on a filled tint.
+*/
+const UI_TINT: Record<ColorName, string> = { ...COLORS, ink: '#aab2c8' }
+const WHITE_TEXT_ON = new Set<ColorName>(['blue'])
+export function tintVars(c: ColorName): CSSProperties {
+  return { '--tint': UI_TINT[c], '--on-tint': WHITE_TEXT_ON.has(c) ? '#ffffff' : '#111316' } as CSSProperties
 }
 
 export const EYE_DARK = '#111316'
