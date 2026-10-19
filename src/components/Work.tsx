@@ -2,7 +2,7 @@ import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
 import { PROJECTS, TOOLS } from '../data'
 import { COLORS } from '../lib/blob'
 import ProjectCard from './ProjectCard'
-import Reveal, { Title } from './Reveal'
+import Reveal, { ScrollFade, Title } from './Reveal'
 
 interface WorkProps {
   active: string | null
@@ -19,8 +19,10 @@ function Chip(props: { label: string; count: number; pressed: boolean; color: st
         className="chip"
         aria-pressed={props.pressed}
         onClick={props.onClick}
-        whileHover={{ y: -2 }}
-        whileTap={{ scale: 0.94 }}
+        style={{ ['--sw' as string]: props.color }}
+        whileHover={{ y: -3, scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
+        transition={{ type: 'spring', stiffness: 420, damping: 18 }}
       >
         {props.pressed && (
           <motion.span layoutId="chip-bg" className="chip-bg" transition={{ type: 'spring', stiffness: 420, damping: 34 }} />
@@ -41,12 +43,12 @@ export default function Work({ active, setActive, counts, flash }: WorkProps) {
   return (
     <section className="section" id="work">
       <div className="wrap">
-        <div className="section-head">
+        <ScrollFade className="section-head" fadeOut={false}>
           <Title text="Work" />
-          <Reveal className="note" delay={0.2}>
+          <span className="note">
             {label ? `${shown.length} of ${PROJECTS.length} use ${label}` : `${PROJECTS.length} projects`}
-          </Reveal>
-        </div>
+          </span>
+        </ScrollFade>
         <Reveal className="intro" delay={0.05}>
           <p>Client builds, company products and the projects I learned on. Open a card to see what I built.</p>
         </Reveal>
@@ -69,8 +71,8 @@ export default function Work({ active, setActive, counts, flash }: WorkProps) {
         </Reveal>
         <motion.div className="projects" layout>
           <AnimatePresence mode="popLayout">
-            {shown.map((p, i) => (
-              <ProjectCard key={p.id} project={p} index={i} flash={flash} />
+            {shown.map((p) => (
+              <ProjectCard key={p.id} project={p} flash={flash} />
             ))}
           </AnimatePresence>
         </motion.div>

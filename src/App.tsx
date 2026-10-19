@@ -5,6 +5,7 @@ import Header from './components/Header'
 import Hero from './components/Hero'
 import Work from './components/Work'
 import Guide from './components/Guide'
+import Belt from './components/Belt'
 import { Contact, Cv, Footer, Path, Toolbox } from './components/Sections'
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
       <Header />
       <main id="main">
         <Hero active={active} counts={counts} onPick={pick} onShow={show} onClear={clear} />
+        <Belt />
         <Work active={active} setActive={setActive} counts={counts} flash={flash} />
         <Path />
         <Toolbox />

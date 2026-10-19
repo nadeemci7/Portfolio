@@ -28,6 +28,8 @@ export interface Project {
   id: string
   name: string
   kind: string
+  /** what the card's character says when you hover the card */
+  teaser?: string
   when?: string
   featured?: boolean
   face?: FaceSpec
@@ -75,6 +77,7 @@ export const PROJECTS: Project[] = [
     id: 'healthfirst',
     name: 'HealthFirst Clinics',
     kind: 'Health Cloud · live',
+    teaser: '3 sites, live right now',
     when: 'Sep 2026 to now',
     featured: true,
     face: { color: 'teal', shape: 'round', eyes: 'dots' },
@@ -102,6 +105,7 @@ export const PROJECTS: Project[] = [
     id: 'sales-assistant',
     name: 'Sales Assistant and Integration Hub',
     kind: 'Sales Cloud · Agentforce · Slack',
+    teaser: 'Ask me about your deals',
     when: 'Oct 2026',
     featured: true,
     face: { color: 'blue', shape: 'round', eyes: 'strobi' },
@@ -121,6 +125,7 @@ export const PROJECTS: Project[] = [
     id: 'scallor',
     name: 'Scallor',
     kind: 'SaaS platform',
+    teaser: 'I catch scope creep',
     face: { color: 'ink', shape: 'round', eyes: 'dashes' },
     line: 'Delivery intelligence for consulting teams. Scallor reads SOWs, meetings, Slack, email and tickets and flags scope changes nobody priced.',
     stack: ['Next.js', 'TypeScript', 'Supabase'],
@@ -135,6 +140,7 @@ export const PROJECTS: Project[] = [
     id: 'revenue-cloud',
     name: 'Revenue Cloud POC',
     kind: 'Revenue Cloud · B2B manufacturing',
+    teaser: 'Lead in, order out',
     face: { color: 'yellow', shape: 'egg', eyes: 'dashes' },
     line: 'Lead to Order for a B2B manufacturer, from the first enquiry to an activated order.',
     chain: ['Lead', 'Account', 'Opportunity', 'Quote', 'Order'],
@@ -151,6 +157,7 @@ export const PROJECTS: Project[] = [
     id: 'fabric',
     name: 'Fabric Configurator',
     kind: 'Sales Cloud · manufacturing',
+    teaser: 'Pick a shade, I check stock',
     when: 'Oct 2026',
     face: { color: 'pink', shape: 'cloud', eyes: 'vee' },
     line: 'A configurator on the Opportunity page for fabric deals. Reps pick fabrics and shades in a seven-tab window and see stock as they go.',
@@ -168,6 +175,7 @@ export const PROJECTS: Project[] = [
     id: 'zoho-fst',
     name: 'Field Sales on Zoho CRM',
     kind: 'Zoho CRM',
+    teaser: '44 modules, zero clicks',
     when: 'Oct 2026',
     face: { color: 'red', shape: 'squircle', eyes: 'dots' },
     line: "The company's Salesforce field sales app, rebuilt inside Zoho CRM and deployed by scripts through Zoho's APIs.",
@@ -184,6 +192,7 @@ export const PROJECTS: Project[] = [
     id: 'catalyst',
     name: 'Catalyst',
     kind: 'Business platform · in progress',
+    teaser: 'Six clouds, one app',
     when: '2026',
     face: { color: 'cloud', shape: 'bean', eyes: 'dashdot' },
     line: "Cloud Ingenious's own business platform, with sales, marketing, order-to-cash, inventory, service and manufacturing in one app.",
@@ -199,6 +208,7 @@ export const PROJECTS: Project[] = [
     id: 'quickmart',
     name: 'Quickmart',
     kind: 'Spring Boot backend',
+    teaser: 'JWT at the door',
     face: { color: 'orange', shape: 'squircle', eyes: 'dashes' },
     line: 'An e-commerce backend with products, cart, orders and payment simulation, secured with JWT.',
     stack: ['Spring Boot', 'Spring Security', 'JWT', 'Hibernate', 'MySQL', 'Swagger'],
@@ -213,6 +223,7 @@ export const PROJECTS: Project[] = [
     id: 'library',
     name: 'Library Manager',
     kind: 'Core Java console app',
+    teaser: 'Overdue? I noticed',
     face: { color: 'yellow', shape: 'pill', eyes: 'dots' },
     line: 'Issue, return, search and member management over JDBC and MySQL, with the DAO pattern keeping SQL out of the business logic.',
     stack: ['Core Java', 'JDBC', 'MySQL', 'OOP'],
