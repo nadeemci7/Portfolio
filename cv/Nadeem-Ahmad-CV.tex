@@ -1,0 +1,188 @@
+% Nadeem Ahmad - CV
+% Compiles on Overleaf (pdfLaTeX, the default) and with XeLaTeX / Tectonic.
+% To edit on Overleaf: New Project > Upload Project > pick this .tex file.
+
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,left=0.62in,right=0.62in,top=0.5in,bottom=0.5in]{geometry}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\fi
+\usepackage{XCharter}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{2B4CC0}
+\definecolor{soft}{HTML}{4A5068}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\linespread{1.04}
+
+\titleformat{\section}
+  {\large\bfseries\color{accent}}{}{0em}{\MakeUppercase}
+  [\vspace{-7pt}\textcolor{accent}{\rule{\linewidth}{0.6pt}}]
+\titlespacing*{\section}{0pt}{9pt}{5pt}
+
+\setlist[itemize]{leftmargin=1.1em, label={\small\textbullet}, itemsep=1.2pt, topsep=2pt, parsep=0pt, partopsep=0pt}
+
+% \role{Title}{Dates}{Organisation}{Place}
+\newcommand{\role}[4]{%
+  \textbf{#1}\hfill #2\\
+  {\color{soft}\textit{#3}}\hfill{\color{soft}\textit{#4}}\par}
+
+% \project{Name}{Dates or note}{Stack}
+\newcommand{\project}[3]{%
+  \textbf{#1}\hfill {\small #2}\\
+  {\small\color{soft}\textit{#3}}\par}
+
+\begin{document}
+
+%----------------------------------------------------------------- Header
+\begin{center}
+  {\fontsize{24}{28}\selectfont\bfseries NADEEM AHMAD}\\[3pt]
+  {\large Full Stack Developer \,|\, Salesforce and Java}\\[4pt]
+  {\small Delhi, India 110025 \,|\, +91 8541020044 \,|\,
+  \href{mailto:nadeem25official@gmail.com}{\textcolor{accent}{nadeem25official@gmail.com}}\\[1pt]
+  \href{https://www.linkedin.com/in/nadeem-ahmad25/}{\textcolor{accent}{linkedin.com/in/nadeem-ahmad25}} \,|\,
+  \href{https://github.com/nadeem-25}{\textcolor{accent}{github.com/nadeem-25}}}
+\end{center}
+
+%----------------------------------------------------------------- Summary
+\section{Summary}
+Full stack developer working across Salesforce and Java. Built a multi-clinic healthcare CRM on
+Health Cloud end to end (98 Apex classes, 51 Lightning Web Components, three live Experience Cloud
+sites, 642 Apex test methods), an Agentforce assistant that lets sales reps work in Salesforce from
+Slack, and integrations between Salesforce, Slack, HubSpot, TallyPrime and Meta. Backend foundation
+in Spring Boot, Hibernate and MySQL, and day-to-day work in Next.js, TypeScript and Supabase.
+
+%----------------------------------------------------------------- Skills
+\section{Technical Skills}
+\begin{itemize}
+  \item \textbf{Salesforce development:} Apex (Triggers, Batch, Queueable, Schedulable, REST callouts),
+        SOQL, SOSL, Lightning Web Components, Aura, Visualforce (PDF), Platform Events,
+        Inbound Email Services, Custom Metadata, Apex tests with mocked callouts
+  \item \textbf{Salesforce platform:} Health Cloud, Service Cloud, Sales Cloud, Revenue Cloud,
+        Experience Cloud (LWR), Flows, Entitlements and Milestones, Assignment and Escalation Rules,
+        Duplicate Rules, Reports and Dashboards
+  \item \textbf{AI and agents:} Agentforce (Employee Agents, Agent Script, Apex actions),
+        Salesforce for Slack, OpenAI API through Named Credentials
+  \item \textbf{Security and integration:} REST APIs, webhooks, Named Credentials, Protected Custom
+        Settings, Profiles, Permission Sets, Sharing Rules, Apex User Mode, Guest User Security
+  \item \textbf{Java and backend:} Java 8+, Spring Boot, Spring Security (JWT), Hibernate, JPA,
+        MySQL, database design (3NF), indexing
+  \item \textbf{Web and tools:} JavaScript, TypeScript, Next.js, Supabase, HTML5, CSS3,
+        Zoho CRM (Deluge, COQL), Salesforce CLI, Git, Postman, Maven
+\end{itemize}
+
+%----------------------------------------------------------------- Experience
+\section{Experience}
+\role{Full Stack Developer (Salesforce)}{2026 -- Present}{Cloud Ingenious}{India}
+\begin{itemize}
+  \item Build Salesforce solutions for clients on Health Cloud, Sales Cloud, Revenue Cloud and
+        Agentforce; the largest builds are listed under Projects.
+  \item Rebuilt the company's field sales app, a Salesforce managed package, on Zoho CRM:
+        44 custom modules, 467 fields, 25 Deluge functions and 9 workflow rules, all deployed
+        through Zoho's APIs with scripts instead of clicks.
+  \item Built a fabric configurator for a manufacturing use case: an LWC on the Opportunity page with
+        a seven-tab configuration window, a catalog read live from the price book, stock checks,
+        and configured lines saved as Opportunity Products.
+  \item Working on Catalyst, the company's own business platform (Next.js, PostgreSQL, Docker), with
+        sales, marketing, order-to-cash, inventory, service and manufacturing modules and a super
+        admin console behind two-factor sign-in.
+\end{itemize}
+\vspace{4pt}
+\role{Web Development Intern}{Dec 2022 -- Feb 2023}{JMI Model United Nations}{New Delhi}
+\begin{itemize}
+  \item Built responsive pages in HTML, CSS and JavaScript, with lazy loading and DOM work that kept
+        the site fast for 500+ concurrent users.
+  \item Added form validation and dynamic UI components that cut user input errors.
+\end{itemize}
+
+%----------------------------------------------------------------- Projects
+\section{Projects}
+\project{HealthFirst Clinics: healthcare CRM on Salesforce Health Cloud}{Sep 2026 -- Present}
+  {Apex, LWC, Health Cloud, Experience Cloud, Service Cloud, Flows, Platform Events, OpenAI API}
+{\small Live:
+  \href{https://great-codey-17397-dev-ed.develop.my.site.com/healthfirst/}{\textcolor{accent}{Public website}} \,|\,
+  \href{https://great-codey-17397-dev-ed.develop.my.site.com/patients/}{\textcolor{accent}{Patient Portal}} \,|\,
+  \href{https://great-codey-17397-dev-ed.develop.my.site.com/doctors/}{\textcolor{accent}{Doctor Portal}}}
+\begin{itemize}
+  \item Built a multi-clinic healthcare CRM end to end: 98 Apex classes (33,000+ lines), 17 triggers,
+        51 LWCs, 9 custom objects and 6 custom metadata types, covered by 642 Apex test methods.
+  \item Launched three Experience Cloud sites: a public website with an inquiry form, a Patient Portal
+        (appointments, bills, records, care plans) and a Doctor Portal (diary, patients, admissions).
+  \item Automated inquiry handling on Cases with assignment and escalation rules, entitlement SLAs with
+        milestones, and work queues for coordinators.
+  \item Built AI triage that scores urgency and specialty through a Named Credential callout to OpenAI,
+        falling back to rule-based scoring on any timeout, rate limit or bad response.
+  \item Built an in-app AI agent whose every read and write runs in Apex User Mode, so it can never
+        exceed the operator's sharing, object and field permissions.
+  \item Implemented booking and auto-booking on Service Appointments, bed admissions and discharge,
+        billing with invoice lines, and Visualforce PDF invoices and prescriptions.
+  \item Secured guest and portal flows with SHA-256 hashed one-time codes, per-user and daily rate
+        limits and enumeration-safe responses; added consent tracking, data-erasure requests,
+        retention batch jobs and a FHIR R4 health-record export.
+\end{itemize}
+\vspace{4pt}
+\project{Sales Assistant and Integration Hub: Sales Cloud, Agentforce and Slack}{Oct 2026}
+  {Apex, LWC, Agentforce, Agent Script, Custom Metadata, Slack API, HubSpot API, Meta Marketing API, TallyPrime}
+\begin{itemize}
+  \item Built an Agentforce employee agent that lets reps search, read, create and update Salesforce
+        records and review their pipeline from Slack, through five Apex actions that confirm
+        before any write.
+  \item Built a sync engine that connects Salesforce with Slack, HubSpot, TallyPrime, Meta Ads and Meta
+        Lead Ads, with direction, schedule and conflict rule set per connection. Field and object
+        mappings live in Custom Metadata, so adding a mapping needs no code.
+  \item Posted Opportunity changes to a Slack channel with before and after values and a record link,
+        and set up Slack channels on record pages and Sales Cloud for Slack.
+  \item Kept every credential server-side in a protected custom setting, never sent to the browser,
+        and tested the hub with Apex tests against mocked APIs.
+\end{itemize}
+\vspace{4pt}
+\project{Scallor: delivery intelligence platform}{\href{https://scallor.com}{\textcolor{accent}{scallor.com}}}
+  {Next.js, TypeScript, Supabase}
+\begin{itemize}
+  \item Scallor helps consulting teams catch unpriced scope changes by reading SOWs, meetings, Slack,
+        email and tickets.
+  \item Work on the platform's API routes, server actions, scheduled jobs and webhook receivers, with
+        a focus on keeping them reliable in production.
+\end{itemize}
+\vspace{4pt}
+\project{Salesforce Revenue Cloud: B2B manufacturing proof of concept}{}
+  {Revenue Cloud, Sales Cloud, Lightning Experience, LWC, Apex, Flows}
+\begin{itemize}
+  \item Configured Lead to Order for a B2B manufacturer: Lead, Account and Contact, Opportunity, Quote,
+        Order, through to order activation.
+  \item Set up the Revenue Cloud product catalog for product selection and quoting; enforced business
+        rules with Validation Rules and Flows; built LWCs, and Reports and Dashboards for sales metrics.
+\end{itemize}
+\vspace{4pt}
+\project{Quickmart: e-commerce backend}{}
+  {Spring Boot, Spring Security, JWT, Hibernate, MySQL, Swagger}
+\begin{itemize}
+  \item Layered backend (Controller, Service, Repository) with product, cart, order and payment
+        simulation modules, secured with JWT and role-based access (Admin, User).
+  \item Pagination, filtering and stock validation that prevents overselling; global exception
+        handling; APIs documented with Swagger; JPA queries tuned with indexing.
+\end{itemize}
+
+%----------------------------------------------------------------- Training / Education
+\section{Training}
+\role{Full Stack Java Developer Course}{Jul 2025 -- Present}{QSpiders}{India}
+{\small Core and Advanced Java, JDBC, Servlet, JSP, Spring Boot and front-end technologies.}
+
+\section{Education}
+\role{Bachelor of Computer Applications (Honours)}{2021 -- 2024}{Magadh University}{CGPA 73.3\%}
+\vspace{3pt}
+\role{Bachelor of Arts (Honours), Sociology}{2018 -- 2021}{Patliputra University}{}
+
+\section{Languages}
+English, Hindi, Urdu
+
+\end{document}
